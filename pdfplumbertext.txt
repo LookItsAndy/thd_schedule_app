@@ -1,0 +1,4 @@
+ Aug 25 - 31 17:30 hours Aug 5:30 PM - 10:00 PM [4:30] 25 6612 - Store 094 - Order Fulfillment Associate Aug 26 Aug 5:30 PM - 10:00 PM [4:30] 27 6612 - Store 094 - Order Fulfillment Associate Aug 28 Aug 5:30 PM - 10:00 PM [4:30] 29 6612 - Store 094 - Order Fulfillment Associate Aug 6:00 PM - 10:00 PM [4:00] 30 6612 - Store 094 - Order Fulfillment Associate Aug 31
+
+ Sep 1 - 7 16:30 hours Sep 6:00 PM - 10:00 PM [4:00] 1 6612 - Store 094 - Order Fulfillment Associate Sep 2 Sep 6:00 PM - 10:00 PM [4:00] 3 6612 - Store 094 - Order Fulfillment Associate Sep 4 Sep 1:30 PM - 6:00 PM [4:30] 5 6612 - Store 094 - Order Fulfillment Associate Sep 6:00 PM - 10:00 PM [4:00] 6 6612 - Store 094 - Order Fulfillment Associate Sep 7
+
