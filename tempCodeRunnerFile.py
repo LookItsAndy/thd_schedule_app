@@ -1,2 +1,4 @@
-data = pdfplumber.pages[0].extract_text_simple(x_tolerance=3, y_tolerance=3)
-    # print(data)
+with open ("pdfplumbertext.txt", "a") as f:
+            #     f.write(text + "\n\n")
+
+            # print(text, "\n\n\n")
