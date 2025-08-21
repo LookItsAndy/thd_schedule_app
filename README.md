@@ -1,1 +1,1 @@
-This is a personal project to generate iCalendar events from Workforce Tools PDF work schedules. Uses pdfplumber to extract text from PDF pages and grab shift information.
+This is a personal project to generate iCalendar events from Workforce Tools PDF work schedules. As of today, the app does not allow you to do this, so I'm using the PDF feature they added... The project uses PDFplumber to extract text from PDF pages and grab shift information.
