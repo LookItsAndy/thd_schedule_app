@@ -14,7 +14,7 @@ def generate_ICS_file(shifts, selected_range):
     
     s_shift_year = selected_range[2]
     e_shift_year = selected_range[5]
-    store_location = "***REMOVED***"
+    store_location = "[STORE_LOCATION_HERE]"
     
     if (s_shift_year == e_shift_year):
         
