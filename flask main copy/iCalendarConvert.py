@@ -83,4 +83,4 @@ def generate_ICS_bytes(shifts, selected_range):
             event.add_component(alarm_1hr_before)
             cal.add_component(event)
             
-        return cal.to_ical(), file_name
+        return cal.to_ical(), file_name 
