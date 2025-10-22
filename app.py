@@ -1,4 +1,5 @@
 from flask import Flask, request, send_file, abort
+import os
 from io import BytesIO
 from shift_parser import parse_pdf, build_ics_bytes
 
@@ -43,4 +44,4 @@ def upload():
     return send_file(BytesIO(ics_bytes), mimetype="text/calendar", as_attachment=True,download_name=file_name + '.ics')
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=int(os.getenv("PORT", 8080)), debug=True)

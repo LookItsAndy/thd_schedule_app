@@ -21,6 +21,10 @@ def clean_extracted_text(text):
     text = " ".join(text.split())
     
     match = re.search(fr'({MONTH})\s{DAY},\s{YEAR}\s-\s({MONTH})\s{DAY},\s{YEAR}\s', text)
+    
+    if not match:
+        raise ValueError("Could not find Selected Dtae Range header in PDF file!")
+    
     selected_range = match.groups()
     text = re.sub(fr'Workforce Tools Schedule - Selected Date Range {MONTH}\s{DAY},\s{YEAR}\s-\s{MONTH}\s{DAY},\s{YEAR}\s' , "", text)
     text = re.sub(r'Shared or printed versions of the schedule may not reflect the most current information. ' \
@@ -32,12 +36,13 @@ def clean_extracted_text(text):
         temptext = temptext + "\n" + part
 
     #remove empty lines at beginning
-    
     text = temptext.lstrip("\n")
     lines = text.splitlines()
     lines = [line.rstrip() for line in lines]
     text = "\n".join(lines)
-    return text, selected_range
+    
+    text_with_header = text
+    return text_with_header, selected_range
 
 
 
@@ -45,7 +50,7 @@ def clean_extracted_text(text):
 Needs clean text to be passed through
 Processes the Week Header and removes. 
 '''
-def extract_information(clean_text, selected_range):
+def extract_information(clean_text):
 # potential issue: when shift week goes from one month to another. Sep 21 - Oct 5
 # potential way to detect, compare first start day to end day and if greater than
 # i will figure out later
@@ -63,12 +68,6 @@ def extract_information(clean_text, selected_range):
         end_day = match.group(3)
         week_hours = match.group(4)
         
-        # print("Week:", match.group(1), match.group(2), "-", match.group(3))
-        # print("Month:", match.group(1))
-        # print("Start Day:", match.group(2))
-        # print("End Day:", match.group(3))
-        # print("Week Hours:", match.group(4))
-    
     for line in clean_text.splitlines():
         #print(line)
         match = re.match(SHIFT_PATTERN, line)
@@ -86,5 +85,5 @@ def extract_information(clean_text, selected_range):
         
            
         
-    return shift_objects, clean_text
+    return clean_text, shift_objects
 
