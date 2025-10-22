@@ -1,10 +1,8 @@
 import os
-from dotenv import load_dotenv
 from flask import Flask, request, send_file, abort, flash, redirect, url_for, render_template
 from io import BytesIO
 from shift_parser import parse_pdf, build_ics_bytes
 
-load_dotenv()
 app = Flask("__name__")
 app.config["MAXIMUM_CONTENT_LENGTH"] = 10 * 1024 * 1024 # 10 MB upload limit
 app.secret_key = os.environ.get("SECRET_KEY")
@@ -54,7 +52,7 @@ def upload():
     return send_file(BytesIO(ics_bytes), mimetype="text/calendar", as_attachment=True,download_name=file_name + '.ics')
 
 
-# CHANGE BEFORE MERGE
+
 if __name__ == "__main__":
-    #app.run(host='0.0.0.0', port=int(os.getenv("PORT", 8080)), debug=True)
-    app.run(host='127.0.0.1', port=int(os.getenv("PORT", 8080)), debug=True)
+    app.run(host='0.0.0.0', port=int(os.getenv("PORT", 8080)), debug=True)
+    
