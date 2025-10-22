@@ -23,7 +23,7 @@ def clean_extracted_text(text):
     match = re.search(fr'({MONTH})\s{DAY},\s{YEAR}\s-\s({MONTH})\s{DAY},\s{YEAR}\s', text)
     
     if not match:
-        raise ValueError("Could not find Selected Dtae Range header in PDF file!")
+        raise ValueError("Could not match headers in PDF file!")
     
     selected_range = match.groups()
     text = re.sub(fr'Workforce Tools Schedule - Selected Date Range {MONTH}\s{DAY},\s{YEAR}\s-\s{MONTH}\s{DAY},\s{YEAR}\s' , "", text)
