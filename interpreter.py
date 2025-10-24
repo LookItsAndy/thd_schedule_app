@@ -77,7 +77,7 @@ def extract_information(clean_text):
     week_hours = ""
     
     for match in week_header:
-        print("running inside lop")
+
         start_month = match.group(1)    
         start_day = match.group(2)
         
@@ -91,13 +91,11 @@ def extract_information(clean_text):
         else:
             days_of_week = f'{start_month} {start_day} - {end_day}'
             
-    print("running outside loop")
         
     for line in clean_text.splitlines():
-        #print(line)
         match = re.match(SHIFT_PATTERN, line)
+        
         if match:
-            #print("match groups" + str(match.groups()))
             month = match.group(1)
             day = match.group(5)
             start_time = match.group(2)
