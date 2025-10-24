@@ -30,18 +30,17 @@ def clean_extracted_text(text):
     text = re.sub(r'Shared or printed versions of the schedule may not reflect the most current information. ' \
         'All associates are responsible for regularly checking the app for any schedule updates. ','',text)
 
-    temptext = ""
-    parts = re.split(fr'(?={MONTH})', text)
-    for part in parts:
-        temptext = temptext + "\n" + part
+    
+    pattern = rf'(?<!-\s)({MONTH}\s{DAY})(?!\s*-\s*{MONTH}\s{DAY})'
+    text = re.sub(pattern, r'\n\1', text)
 
-    #remove empty lines at beginning
-    text = temptext.lstrip("\n")
-    lines = text.splitlines()
-    lines = [line.rstrip() for line in lines]
+    # Clean up leading/trailing whitespace
+    text = text.lstrip("\n")
+    lines = [line.rstrip() for line in text.splitlines()]
     text = "\n".join(lines)
     
     text_with_header = text
+        
     return text_with_header, selected_range
 
 
@@ -54,12 +53,14 @@ def extract_information(clean_text):
 # potential issue: when shift week goes from one month to another. Sep 21 - Oct 5
 # potential way to detect, compare first start day to end day and if greater than
 # i will figure out later
-    WEEK_HEADER_PATTERN = fr'({MONTH})\s{DAY}\s*-\s*{DAY}\s*{HOURS}'
+
+    # supports cross-month
+    WEEK_HEADER_PATTERN = fr'({MONTH})\s{DAY}\s*-\s*(?:{MONTH}\s*)?{DAY}\s*{HOURS}'
     SHIFT_PATTERN = fr'({MONTH})\s{TIME}\s-\s{TIME}\s\[{HOURS}\]\s{DAY} (.*)'
     
     shift_objects = []
     week = re.finditer(WEEK_HEADER_PATTERN, clean_text)
-    clean_text = re.sub(fr'{MONTH}\s{DAY}\s*-\s*{DAY}\s*{HOURS}\s*hours\s*', "", clean_text)
+    clean_text = re.sub(fr'{WEEK_HEADER_PATTERN}\s*hours\s*', "", clean_text)
 
     for match in week:
         days_of_week = match.group(1) + " " + match.group(2) + " - " + match.group(3)

@@ -1,8 +1,10 @@
 import os
+from dotenv import load_dotenv
 from flask import Flask, request, send_file, abort, flash, redirect, url_for, render_template
 from io import BytesIO
 from shift_parser import parse_pdf, build_ics_bytes
 
+load_dotenv()
 app = Flask("__name__")
 app.config["MAXIMUM_CONTENT_LENGTH"] = 10 * 1024 * 1024 # 10 MB upload limit
 app.secret_key = os.environ.get("SECRET_KEY")
