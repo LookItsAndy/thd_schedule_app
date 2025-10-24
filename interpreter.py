@@ -30,20 +30,17 @@ def clean_extracted_text(text):
     text = re.sub(r'Shared or printed versions of the schedule may not reflect the most current information. ' \
         'All associates are responsible for regularly checking the app for any schedule updates. ','',text)
 
-    temptext = ""
-    parts = re.split(fr'(?={MONTH})', text)
-    for part in parts:
-        temptext = temptext + "\n" + part
+    pattern = rf'(?<!-\s)({MONTH}\s{DAY})(?!\s*-\s*{MONTH}\s{DAY})'
+    text = re.sub(pattern, r'\n\1', text)
 
-    #remove empty lines at beginning
-    text = temptext.lstrip("\n")
-    lines = text.splitlines()
-    lines = [line.rstrip() for line in lines]
+    # Clean up leading/trailing whitespace
+    text = text.lstrip("\n")
+    lines = [line.rstrip() for line in text.splitlines()]
     text = "\n".join(lines)
     
     text_with_header = text
+        
     return text_with_header, selected_range
-
 
 
 '''
@@ -54,19 +51,47 @@ def extract_information(clean_text):
 # potential issue: when shift week goes from one month to another. Sep 21 - Oct 5
 # potential way to detect, compare first start day to end day and if greater than
 # i will figure out later
-    WEEK_HEADER_PATTERN = fr'({MONTH})\s{DAY}\s*-\s*{DAY}\s*{HOURS}'
-    SHIFT_PATTERN = fr'({MONTH})\s{TIME}\s-\s{TIME}\s\[{HOURS}\]\s{DAY} (.*)'
+    
+    WEEK_HEADER_PATTERN = (
+        fr'({MONTH})\s'                             # Ex: Oct       '[Month] '
+        fr'{DAY}\s-'                                # Ex: 27        '[Day] -'
+        fr'(?:\s({MONTH}))?\s{DAY}\s'               # Ex: Nov 2     '[Maybe Month] [Day] '
+        fr'{HOURS}'                                 # Ex: 19:30     '[Hours]'
+    )
+    SHIFT_PATTERN = (
+        fr'({MONTH})\s'                             # Ex: Oct
+        fr'{TIME}\s-\s{TIME}\s'                     # Ex: 2:30 PM - 10:00 PM
+        fr'\[{HOURS}\]\s'                           # Ex: [7:00]
+        fr'{DAY}\s'                                 # Ex: 27
+        r'(\d{4})\s-\sStore\s(\d{2,3})\s-\s(.*)'    # Ex: 0105 - Store 094 - Order Fulfillment Associate
+    )
+    
     
     shift_objects = []
-    week = re.finditer(WEEK_HEADER_PATTERN, clean_text)
+    week_header = re.finditer(WEEK_HEADER_PATTERN, clean_text)
+    print(clean_text)
     clean_text = re.sub(fr'{MONTH}\s{DAY}\s*-\s*{DAY}\s*{HOURS}\s*hours\s*', "", clean_text)
-
-    for match in week:
-        days_of_week = match.group(1) + " " + match.group(2) + " - " + match.group(3)
-        month = match.group(1)    
+    
+    # set to nothing in case no match found in week_header to avoid program crashing
+    days_of_week = ""
+    week_hours = ""
+    
+    for match in week_header:
+        print("running inside lop")
+        start_month = match.group(1)    
         start_day = match.group(2)
-        end_day = match.group(3)
-        week_hours = match.group(4)
+        
+        end_month = match.group(3)
+        end_day = match.group(4)
+        
+        week_hours = match.group(5)
+    
+        if end_month != None:
+            days_of_week = f'{start_month} {start_day} - {end_month} {end_day}'
+        else:
+            days_of_week = f'{start_month} {start_day} - {end_day}'
+            
+    print("running outside loop")
         
     for line in clean_text.splitlines():
         #print(line)
@@ -78,8 +103,10 @@ def extract_information(clean_text):
             start_time = match.group(2)
             end_time = match.group(3)
             duration = "[" + match.group(4) + "]"
-            description = match.group(6)
-            shift = Shift.Shift(month, day, start_time, end_time, duration, description, days_of_week, week_hours)
+            store_number = match.group(6)
+            department_number = match.group(7)
+            job_description = match.group(len(match.groups())) # Always set description to last capturing match which is job description
+            shift = Shift.Shift(month, day, start_time, end_time, duration, store_number, department_number, job_description, days_of_week, week_hours)
             shift_objects.append(shift)
 
         
