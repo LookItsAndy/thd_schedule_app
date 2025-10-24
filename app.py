@@ -54,7 +54,7 @@ def upload():
     return send_file(BytesIO(ics_bytes), mimetype="text/calendar", as_attachment=True,download_name=file_name + '.ics')
 
 
-# CHANGE BEFORE MERGE
+
 if __name__ == "__main__":
-    #app.run(host='0.0.0.0', port=int(os.getenv("PORT", 8080)), debug=True)
-    app.run(host='127.0.0.1', port=int(os.getenv("PORT", 8080)), debug=True)
+    app.run(host='0.0.0.0', port=int(os.getenv("PORT", 8080)), debug=True)
+    
