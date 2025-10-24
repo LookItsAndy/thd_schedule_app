@@ -21,7 +21,7 @@ def generate_ICS_bytes(shifts, selected_range):
         cal.add('version', VERSION)
         cal.add('prodid', PRODID)
         cal.add('calscale', CALSCALE)
-        print(file_name)
+
         
         alarm_1hr_before = Alarm()
         alarm_1hr_before.add('action', 'DISPLAY')

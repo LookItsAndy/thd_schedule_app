@@ -69,7 +69,6 @@ def extract_information(clean_text):
     
     shift_objects = []
     week_header = re.finditer(WEEK_HEADER_PATTERN, clean_text)
-    print(clean_text)
     clean_text = re.sub(fr'{MONTH}\s{DAY}\s*-\s*{DAY}\s*{HOURS}\s*hours\s*', "", clean_text)
     
     # set to nothing in case no match found in week_header to avoid program crashing
