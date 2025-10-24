@@ -9,7 +9,7 @@ CALSCALE = 'GREGORIAN'
 
 def generate_ICS_bytes(shifts, selected_range):
     file_name = "thd_schedule_" + selected_range[0] + "_" + selected_range[1] +  "_" + selected_range[2] + \
-    "-" + selected_range[3] + "_" + selected_range[4] + "_" + selected_range[5]
+    "-" + selected_range[3] + "_" + selected_range[4] + "_" + selected_range[5] + ".ics"
     
     s_shift_year = selected_range[2]
     e_shift_year = selected_range[5]
