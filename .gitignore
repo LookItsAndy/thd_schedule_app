@@ -1,0 +1,16 @@
+*.ics
+*.pdf
+*.txt
+!requirements.txt
+
+.env
+env/
+venv/
+.venv/
+
+__pycache__/
+*.pyc
+tempCodeRunnerFile.py
+.vscode
+.DS_Store
+*.png

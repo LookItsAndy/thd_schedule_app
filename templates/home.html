@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+
+
+    <head>
+      <link rel="icon" href="https://cdn.discordapp.com/attachments/761797418626842634/1431151485164716082/Orange_Calendar_Logo.png?ex=68fc5f2f&is=68fb0daf&hm=9ded829344223964bfb2af1e5ac91c4709a594d8890e84c64f49839a073733d3&">
+      <title>Orange Calendar</title>
+    </head>
+
+  
+  <img src="https://cdn.discordapp.com/attachments/761797418626842634/1431151485164716082/Orange_Calendar_Logo.png?ex=68fc5f2f&is=68fb0daf&hm=9ded829344223964bfb2af1e5ac91c4709a594d8890e84c64f49839a073733d3&" alt="Orange Calendar Logo"
+  title="Orange Calendar Logo" width="128" height="128">
+
+
+  
+ <h2 style="color:orange">
+    Upload your Workforce Tools PDF at /upload
+ </h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".pdf">
+        <input type="submit" value="Upload">
+    </form>
+
+
+{% with msgs = get_flashed_messages() %}
+  {% if msgs %}
+    <div style="padding:5px; margin-top: 10px; margin-bottom:10px; color:red; border:1px solid #ddd; background:#fafafa;">
+      {{ msgs[0] }}
+    </div>
+  {% endif %}
+{% endwith %}
+
+    <p>Shared or printed versions of the schedule may not reflect the most current information. All 
+      associates are responsible for regularly checking the app for any schedule updates.</p>
+</html>
