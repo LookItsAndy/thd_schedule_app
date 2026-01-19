@@ -18,8 +18,8 @@ def parse_pdf(file_obj):
 
 
 
-def build_ics_bytes(shifts, selected_range) -> bytes:
-    cal, file_name = iCalendarConvert.generate_ICS_bytes(shifts, selected_range)
-    
+def build_ics_bytes(shifts, selected_range, location="") -> bytes:
+    cal, file_name = iCalendarConvert.generate_ICS_bytes(shifts, selected_range, location)
+
     return cal, file_name
             

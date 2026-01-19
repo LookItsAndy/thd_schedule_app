@@ -47,9 +47,9 @@ def upload():
     if not shifts:
         flash("No shifts found in the upload file")
         return redirect(url_for("home"))
-        
-        
-    ics_bytes, file_name = build_ics_bytes(shifts, selected_range)
+
+    address = request.form.get("address", "").strip()
+    ics_bytes, file_name = build_ics_bytes(shifts, selected_range, address)
     ics_stream = BytesIO(ics_bytes)
     token = secrets.token_hex(8)
     ics_store[token] = (ics_bytes, file_name)
