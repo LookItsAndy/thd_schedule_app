@@ -2,18 +2,19 @@ import icalendar, time
 from icalendar import Alarm
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+from search_store_db import getStoreAddress
 
 VERSION = '2.0'
 PRODID = '//Andy//Orange Calendar//EN'
 CALSCALE = 'GREGORIAN'
 
-def generate_ICS_bytes(shifts, selected_range, location=""):
+def generate_ICS_bytes(shifts, selected_range):
     file_name = "thd_schedule_" + selected_range[0] + "_" + selected_range[1] +  "_" + selected_range[2] + \
     "-" + selected_range[3] + "_" + selected_range[4] + "_" + selected_range[5] + ".ics"
 
     s_shift_year = int(selected_range[2])
     e_shift_year = int(selected_range[5])
-    store_location = location if location else ""   # if no location, leave blank
+    
 
     cal = icalendar.Calendar()
     cal.add('version', VERSION)
@@ -53,7 +54,7 @@ def generate_ICS_bytes(shifts, selected_range, location=""):
         event.add('sequence', int(time.time()))     # Epoch time ensures new file has higher sequence
 
         event.add('description', shift.description)
-        event.add('location', store_location)
+        event.add('location', getStoreAddress(shift.store_number))
         event.add_component(alarm_1hr_before)
         cal.add_component(event)
 
