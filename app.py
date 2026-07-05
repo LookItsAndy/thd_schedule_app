@@ -49,7 +49,7 @@ def upload():
         return redirect(url_for("home"))
 
     address = request.form.get("address", "").strip()
-    ics_bytes, file_name = build_ics_bytes(shifts, selected_range, address)
+    ics_bytes, file_name = build_ics_bytes(shifts, selected_range)
     ics_stream = BytesIO(ics_bytes)
     token = secrets.token_hex(8)
     ics_store[token] = (ics_bytes, file_name)

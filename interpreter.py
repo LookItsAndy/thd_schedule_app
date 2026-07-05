@@ -109,5 +109,5 @@ def extract_information(clean_text):
         
            
         
-    return clean_text, shift_objects
+    return shift_objects
 
